@@ -15,10 +15,11 @@ function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "About", href: "#skills" },
-    { name: "Projects", href: "#circle-section" },
-    { name: "Blogs", href: "#" },
+    { name: "Home", href: "#home" },
+    { name: "Services", href: "#services" },
+    { name: "Projects", href: "#projects" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -29,12 +30,6 @@ function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const menuVariants = {
-    hidden: { x: "-100%" },
-    visible: { x: 0 },
-    exit: { x: "-100%" },
-  };
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -74,8 +69,8 @@ function Navbar() {
           backgroundColor: "rgba(255,255,255,0.1)",
         }}
         animate={{
-          width: isMobile ? "fit-content" : isScrolled ? "75%" : "15%",
-          marginTop: isScrolled ? "0rem" : "6rem",
+          width: isMobile ? "fit-content" : isScrolled ? "75%" : "90%",
+          marginTop: "0rem",
           padding: isScrolled ? "0.2rem 1rem" : "0rem 1rem",
           backgroundColor: isScrolled
             ? "rgba(255,255,255,0.4)"
@@ -89,61 +84,58 @@ function Navbar() {
 
         {/* Desktop Navigation - animate on scroll */}
         <AnimatePresence>
-          {isScrolled && (
-            <motion.div
-              className="hidden lg:flex flex-1 justify-center"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5 }}>
-              <ul className="flex space-x-6 xl:space-x-10 mx-4 items-center">
-                {navLinks.map((link, i) => (
-                  <motion.li
-                    key={link.name}
-                    custom={i}
-                    initial="hidden"
-                    animate="visible"
-                    variants={linkVariants}>
-                    <a
-                      href={link.href}
-                      className="hover:text-indigo-600 transition-colors font-medium text-sm xl:text-base">
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-                <li>
-                  <button className="text-xs xl:text-sm relative rounded-3xl text-indigo-800 px-6 xl:px-10 py-2 flex items-center justify-center overflow-hidden border border-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white">
-                    <span className="relative z-10">
-                      <a href="#contact-us">Contact us</a>
-                    </span>
-                  </button>
-                </li>
-              </ul>
-            </motion.div>
-          )}
+          <motion.div
+            className="hidden lg:flex flex-1 justify-center"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}>
+            <ul className="flex space-x-6 xl:space-x-10 mx-4 items-center">
+              {navLinks.map((link, i) => (
+                <motion.li
+                  key={link.name}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={linkVariants}>
+                  <a
+                    href={link.href}
+                    className="hover:text-indigo-600 transition-colors font-medium text-sm xl:text-base">
+                    {link.name}
+                  </a>
+                </motion.li>
+              ))}
+              <li>
+                <a
+                  href="#contact"
+                  className="text-xs xl:text-sm relative rounded-3xl text-indigo-800 px-6 xl:px-10 py-2 flex items-center justify-center overflow-hidden border border-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white">
+                  <span className="relative z-10">Let's talk</span>
+                </a>
+              </li>
+            </ul>
+          </motion.div>
         </AnimatePresence>
 
-        {/* Mobile Hamburger - show only when scrolled */}
+        {/* Mobile Hamburger */}
         <div className="lg:hidden ml-2">
-          {isScrolled && (
-            <button
-              onClick={toggleMenu}
-              className="flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none"
-              aria-label="Toggle menu">
-              <span
-                className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
-                  isMenuOpen ? "rotate-45 translate-y-1.5" : ""
-                }`}></span>
-              <span
-                className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
-                  isMenuOpen ? "opacity-0" : ""
-                }`}></span>
-              <span
-                className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
-                  isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
-                }`}></span>
-            </button>
-          )}
+          <button
+            onClick={toggleMenu}
+            className="flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none"
+            aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation">
+            <span
+              className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
+                isMenuOpen ? "rotate-45 translate-y-1.5" : ""
+              }`}></span>
+            <span
+              className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
+                isMenuOpen ? "opacity-0" : ""
+              }`}></span>
+            <span
+              className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
+                isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+              }`}></span>
+          </button>
         </div>
       </motion.nav>
 
@@ -169,19 +161,21 @@ function Navbar() {
         {isMenuOpen && (
           <>
             <motion.div
+              id="mobile-navigation"
+              role="navigation"
+              aria-label="Mobile navigation"
               className="fixed top-0 left-0 w-full h-full z-40"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "tween", duration: 0.3 }}>
-              {/* Outer container with unified glass effect */}
-              <div className="flex flex-col h-[42vh] backdrop-blur-xl bg-white/80 border border-white/80 shadow-lg rounded-2xl m-4 p-4">
-                {/* Mobile Header */}
+              <div className="flex flex-col min-h-[65vh] max-h-[calc(100dvh-2rem)] overflow-y-auto backdrop-blur-xl bg-white/80 border border-white/80 shadow-lg rounded-2xl m-4 p-4">
                 <div className="flex justify-between items-center w-full">
                   <Brand />
                   <button
                     onClick={closeMenu}
-                    className="w-8 h-8 flex items-center justify-center relative focus:outline-none">
+                    className="w-8 h-8 flex items-center justify-center relative focus:outline-none"
+                    aria-label="Close menu">
                     <span
                       className={`absolute block w-6 h-0.5 bg-black transition-all duration-300 ${
                         isMenuOpen ? "rotate-45" : ""
@@ -192,8 +186,6 @@ function Navbar() {
                       }`}></span>
                   </button>
                 </div>
-
-                {/* Mobile Nav */}
                 <div className="flex-1 flex flex-col justify-center items-center w-full mt-6">
                   <ul className="flex flex-col space-y-6 sm:space-y-8 text-center w-full">
                     {navLinks.map((link, i) => (
@@ -213,18 +205,18 @@ function Navbar() {
                       </motion.li>
                     ))}
                     <li className="pt-4 w-full flex justify-center">
-                      <button
-                        className="relative rounded-3xl text-indigo-800 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-medium flex items-center justify-center overflow-hidden border border-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white"
-                        onClick={closeMenu}>
-                        <span className="relative z-10">Contact us</span>
-                      </button>
+                    <a
+                      href="#contact"
+                      className="relative rounded-3xl text-indigo-800 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-medium flex items-center justify-center overflow-hidden border border-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white"
+                      onClick={closeMenu}>
+                      <span className="relative z-10">Let's talk</span>
+                    </a>
                     </li>
                   </ul>
                 </div>
               </div>
             </motion.div>
 
-            {/* Mobile Overlay */}
             <motion.div
               className="fixed top-[-20px] h-[100vh] inset-0 bg-black bg-opacity-10 backdrop-blur-sm z-30 lg:hidden"
               onClick={closeMenu}

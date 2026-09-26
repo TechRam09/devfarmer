@@ -46,12 +46,13 @@ export default function ProjectsCarousel({ projects = projectsList }) {
 
   return (
     <div
+      id="projects"
       ref={containerRef}
-      className="relative w-full font-['Roboto']"
+      className="relative w-full font-['Roboto'] scroll-mt-24"
       style={{ height: "300vh" }}
     >
       {/* Header */}
-      <div className="w-full px-4 my-20">
+      <div className="site-container my-20">
         <div className="max-w-xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-purple-700">
             <span className="text-purple-400">Ideas</span> in Action

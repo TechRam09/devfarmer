@@ -1,25 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { animate, svg, stagger } from "animejs";
 
 function AnimatedHeroText() {
+  const svgRef = useRef(null);
+
   useEffect(() => {
-     // Target only path elements with class "line"
-    const paths = document.querySelectorAll("path.line");
+    const svgElement = svgRef.current;
+    if (!svgElement) return;
+
+    const paths = Array.from(svgElement.querySelectorAll("path.line"));
+    if (paths.length === 0) return;
 
     paths.forEach((path) => {
       const length = path.getTotalLength();
       path.setAttribute("stroke-dasharray", length);
       path.setAttribute("stroke-dashoffset", length);
     });
-    animate(svg.createDrawable(".line"), {
+    const animation = animate(svg.createDrawable(paths), {
       draw: ["0 0", "0 1", "1 1"],
-      // ease: "inOutQuad",
-      easing: 'linear',
+      easing: "linear",
       duration: 15000,
       endDelay: 2000,
       delay: stagger(50),
       loop: true,
     });
+
+    return () => animation.cancel();
   }, []);
 
   return (
@@ -32,6 +38,7 @@ function AnimatedHeroText() {
         viewBox="150 270 1130 220"
         height="300"
         preserveAspectRatio="xMidYMid meet"
+        ref={svgRef}
         version="1.2"
         className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[1200px] h-auto"
       >

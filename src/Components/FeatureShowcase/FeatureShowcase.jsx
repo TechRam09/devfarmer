@@ -237,18 +237,12 @@ export function FeatureShowcase() {
         return () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeIndex]);
 
 
     return (
-        <section className=" relative w-[85%] overflow-hidden
-    m-auto rounded-3xl
-    bg-gradient-to-b from-[#faf5ff] via-[#f7f2ff] to-[#f3e8ff]
-    border border-white/60
-    shadow-[0_24px_70px_rgba(147,51,234,0.18)]
-    py-20">
-            <div className="mx-auto flex max-w-6xl flex-col items-center gap-12 px-6 md:flex-row md:gap-16">
+        <section id="services" className="relative w-full overflow-hidden scroll-mt-24 bg-gradient-to-b from-[#faf5ff] via-[#f7f2ff] to-[#f3e8ff] py-20">
+            <div className="site-container site-container--narrow flex flex-col items-center gap-12 md:flex-row md:gap-16">
                 {/* LEFT: Device Mockups */}
                 <div className="relative w-full max-w-md shrink-0">
                     {/* Glow */}
@@ -271,23 +265,7 @@ export function FeatureShowcase() {
                             <span className="h-2 w-2 rounded-full bg-emerald-400" />
                         </div>
                         <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-[#080311]">
-                            {/* TODO: swap skeleton for your actual desktop UI screenshot */}
-                            <div className="flex h-full flex-col gap-4 p-4">
-                                <div className="h-7 w-3/4 rounded-xl bg-gradient-to-r from-[#b48cff] to-[#7dd3fc]" />
-                                <div className="flex gap-3">
-                                    <div className="flex-1 space-y-3">
-                                        <div className="h-4 w-5/6 rounded-lg bg-white/8" />
-                                        <div className="h-4 w-4/6 rounded-lg bg-white/6" />
-                                        <div className="h-4 w-3/6 rounded-lg bg-white/4" />
-                                    </div>
-                                    <div className="flex-1 space-y-3">
-                                        <div className="h-4 w-full rounded-lg bg-white/8" />
-                                        <div className="h-4 w-5/6 rounded-lg bg-white/6" />
-                                        <div className="h-4 w-4/6 rounded-lg bg-white/4" />
-                                    </div>
-                                </div>
-                                <div className="mt-auto h-6 w-2/3 rounded-xl bg-gradient-to-r from-[#6366f1] to-[#a855f7]" />
-                            </div>
+                            {renderLaptopContent(activeSlide.id)}
                         </div>
                         <div className="mt-3 h-2 rounded-b-3xl bg-gradient-to-r from-slate-900 to-slate-800" />
                     </motion.div>
@@ -310,19 +288,7 @@ export function FeatureShowcase() {
                                 </div>
                             </div>
                             <div className="aspect-[9/19] overflow-hidden rounded-[26px] border border-white/10 bg-[#05010b] p-3">
-                                {/* TODO: swap skeleton for your mobile UI screenshot */}
-                                <div className="flex h-full flex-col gap-3">
-                                    <div className="h-4 w-3/4 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#6366f1]" />
-                                    <div className="space-y-2">
-                                        <div className="h-3 w-full rounded-lg bg-white/10" />
-                                        <div className="h-3 w-5/6 rounded-lg bg-white/7" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <div className="h-3 w-full rounded-lg bg-white/10" />
-                                        <div className="h-3 w-4/6 rounded-lg bg-white/7" />
-                                    </div>
-                                    <div className="mt-auto h-7 w-full rounded-xl bg-gradient-to-r from-[#38bdf8] to-[#a855f7]" />
-                                </div>
+                                {renderPhoneContent(activeSlide.id)}
                             </div>
                         </div>
                     </motion.div>

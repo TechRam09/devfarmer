@@ -8,11 +8,18 @@ function ContactUs() {
   const [customerEmail, setCustomerEmail] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [selectedChips, setSelectedChips] = useState([]);
+  const [interestError, setInterestError] = useState("");
   const [loading, setLoading] = useState(false);
   const [otherMessage, setOtherMessage] = useState("");
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+    if (selectedChips.length === 0) {
+      setInterestError("Choose at least one service to continue.");
+      return;
+    }
+    setInterestError("");
+
     const formattedChips = selectedChips.join(", ");
     const emailTemplate = {
       from_name: customerName,
@@ -31,7 +38,7 @@ function ContactUs() {
         emailTemplate,
         emailJsConfig.publicKey
       )
-      .then((response) => {
+      .then(() => {
         alert("Thank you for reaching out. We'll get back to you soon!");
       })
       .then(() => {
@@ -39,20 +46,24 @@ function ContactUs() {
         setCustomerEmail("");
         setCompanyName("");
         setSelectedChips([]);
+        setOtherMessage("");
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         alert("Oops! Something went wrong. Please try again later.");
         setLoading(false);
       });
   };
 
   const toggleChip = (item) => {
+    const isRemovingItem = selectedChips.includes(item);
     setSelectedChips((prev) =>
       prev.includes(item)
         ? prev.filter((chip) => chip !== item)
         : [...prev, item]
     );
+    if (item === "others" && isRemovingItem) setOtherMessage("");
+    setInterestError("");
   };
 
   // Framer Motion variants
@@ -75,8 +86,8 @@ function ContactUs() {
 
   return (
     <motion.section
-      id="contact-us"
-      className="max-w-6xl mx-auto px-6 py-12"
+      id="contact"
+      className="site-container site-container--narrow scroll-mt-24 py-12"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -162,8 +173,12 @@ function ContactUs() {
         </motion.div>
 
         {/* Chips */}
-        <motion.div variants={containerVariants}>
-          <p className="text-sm font-medium text-gray-700 mb-3">
+        <motion.div
+          variants={containerVariants}
+          role="group"
+          aria-labelledby="interest-label"
+          aria-describedby={interestError ? "interest-error" : undefined}>
+          <p id="interest-label" className="text-sm font-medium text-gray-700 mb-3">
             What's in your mind?*
           </p>
           <div className="flex flex-wrap gap-3">
@@ -182,6 +197,7 @@ function ContactUs() {
                 type="button"
                 onClick={() => toggleChip(item)}
                 disabled={loading}
+                aria-pressed={selectedChips.includes(item)}
                 variants={chipVariants}
                 whileHover="hover"
                 className={`px-4 py-2 border rounded-full text-sm transition 
@@ -194,6 +210,11 @@ function ContactUs() {
               </motion.button>
             ))}
           </div>
+          {interestError && (
+            <p id="interest-error" className="mt-2 text-sm text-red-700" role="alert">
+              {interestError}
+            </p>
+          )}
           <AnimatePresence>
             {selectedChips.includes("others") &&
               <motion.div
@@ -219,9 +240,10 @@ function ContactUs() {
         {/* Submit Button */}
         <motion.button
           type="submit"
+          disabled={loading}
           variants={buttonVariants}
-          whileHover="hover"
-          className="mt-1 px-6 py-3 bg-purple-600 text-white font-medium rounded-lg shadow hover:bg-purple-700 transition">
+          whileHover={loading ? undefined : "hover"}
+          className="mt-1 px-6 py-3 bg-purple-600 text-white font-medium rounded-lg shadow transition enabled:hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-60">
           {loading ? "Sending..." : "Submit"}
         </motion.button>
       </motion.form>
