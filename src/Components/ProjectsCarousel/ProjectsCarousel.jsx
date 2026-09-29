@@ -52,14 +52,16 @@ export default function ProjectsCarousel({ projects = projectsList }) {
       style={{ height: "300vh" }}
     >
       {/* Header */}
-      <div className="site-container my-20">
-        <div className="max-w-xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-purple-700">
-            <span className="text-purple-400">Ideas</span> in Action
-          </h1>
-          <p className="text-gray-500 mb-6">
-            Transform your ideas into breathtaking visuals with cutting-edge technology.
-          </p>
+       <div className="pointer-events-none absolute inset-x-0 top-0 z-30 pt-10 sm:pt-14">
+        <div className="site-container">
+          <div className="max-w-xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-purple-700">
+              <span className="text-purple-400">Ideas</span> in Action
+            </h1>
+            <p className="text-gray-500 mb-6">
+              Transform your ideas into breathtaking visuals with cutting-edge technology.
+            </p>
+          </div>
         </div>
       </div>
 

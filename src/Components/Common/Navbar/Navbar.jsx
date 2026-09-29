@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Brand from "../Brand/Brand";
 
 function Navbar() {
@@ -9,8 +9,10 @@ function Navbar() {
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640);
+
     handleResize();
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -19,7 +21,6 @@ function Navbar() {
     { name: "Services", href: "#services" },
     { name: "Projects", href: "#projects" },
     { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -27,7 +28,9 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 100);
+
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -45,25 +48,30 @@ function Navbar() {
 
   const bulbVariants = {
     hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
   };
 
   const linkVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: (i) => ({
+    visible: (index) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.1, type: "spring", stiffness: 100 },
+      transition: {
+        delay: index * 0.1,
+        type: "spring",
+        stiffness: 100,
+      },
     }),
   };
 
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[5000] w-full flex justify-center px-2 sm:px-4">
-      {/* Navbar */}
+    <div className="fixed top-4 left-1/2 z-[5000] flex w-full -translate-x-1/2 justify-center px-2 sm:px-4">
       <motion.nav
-        className="flex items-center justify-between rounded-xl 
-                   backdrop-blur-2xl border border-white/50 shadow-lg shadow-black/20
-                   w-full max-w-7xl px-4 sm:px-6 lg:px-8 transition-all"
+        className="flex w-full max-w-7xl items-center justify-between rounded-xl border border-white/50 px-4 shadow-lg shadow-black/20 backdrop-blur-2xl transition-all sm:px-6 lg:px-8"
         initial={{
           padding: "0.5rem 1rem",
           backgroundColor: "rgba(255,255,255,0.1)",
@@ -77,69 +85,73 @@ function Navbar() {
             : "rgba(255,255,255,0.1)",
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}>
-        {/* Brand - always visible */}
-        <div className="sm:block m-auto">
+        {/* Brand: left side on desktop */}
+        <div className="shrink-0">
           <Brand />
         </div>
 
-        {/* Desktop Navigation - animate on scroll */}
+        {/* Desktop navigation: centre */}
         <AnimatePresence>
           <motion.div
-            className="hidden lg:flex flex-1 justify-center"
+            className="hidden flex-1 justify-center lg:flex"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}>
-            <ul className="flex space-x-6 xl:space-x-10 mx-4 items-center">
-              {navLinks.map((link, i) => (
+            <ul className="flex items-center space-x-6 xl:space-x-10">
+              {navLinks.map((link, index) => (
                 <motion.li
                   key={link.name}
-                  custom={i}
+                  custom={index}
                   initial="hidden"
                   animate="visible"
                   variants={linkVariants}>
                   <a
                     href={link.href}
-                    className="hover:text-indigo-600 transition-colors font-medium text-sm xl:text-base">
+                    className="text-sm font-medium transition-colors hover:text-indigo-600 xl:text-base">
                     {link.name}
                   </a>
                 </motion.li>
               ))}
-              <li>
-                <a
-                  href="#contact"
-                  className="text-xs xl:text-sm relative rounded-3xl text-indigo-800 px-6 xl:px-10 py-2 flex items-center justify-center overflow-hidden border border-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white">
-                  <span className="relative z-10">Let's talk</span>
-                </a>
-              </li>
             </ul>
           </motion.div>
         </AnimatePresence>
 
-        {/* Mobile Hamburger */}
-        <div className="lg:hidden ml-2">
+        {/* Desktop CTA: right side, not a menu item */}
+        <a
+          href="#contact"
+          className="relative hidden shrink-0 items-center justify-center overflow-hidden rounded-3xl border border-indigo-800 px-6 py-2 text-xs text-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white lg:inline-flex xl:px-10 xl:text-sm">
+          <span className="relative z-10">Let&apos;s talk</span>
+        </a>
+
+        {/* Mobile hamburger */}
+        <div className="ml-2 lg:hidden">
           <button
+            type="button"
             onClick={toggleMenu}
-            className="flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none"
+            className="flex h-8 w-8 flex-col items-center justify-center space-y-1 focus:outline-none"
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation">
             <span
-              className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
-                isMenuOpen ? "rotate-45 translate-y-1.5" : ""
-              }`}></span>
+              className={`block h-0.5 w-6 bg-black transition-all duration-300 ${
+                isMenuOpen ? "translate-y-1.5 rotate-45" : ""
+              }`}
+            />
             <span
-              className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
+              className={`block h-0.5 w-6 bg-black transition-all duration-300 ${
                 isMenuOpen ? "opacity-0" : ""
-              }`}></span>
+              }`}
+            />
             <span
-              className={`block w-6 h-0.5 bg-black transition-all duration-300 ${
-                isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
-              }`}></span>
+              className={`block h-0.5 w-6 bg-black transition-all duration-300 ${
+                isMenuOpen ? "-translate-y-1.5 -rotate-45" : ""
+              }`}
+            />
           </button>
         </div>
       </motion.nav>
 
-      {/* ACTIVE Bulb */}
+      {/* Active status message */}
       <AnimatePresence>
         {isScrolled && (
           <motion.div
@@ -148,15 +160,15 @@ function Navbar() {
             animate="visible"
             exit="hidden"
             variants={bulbVariants}>
-            <div className="flex items-center gap-2 bg-indigo-600 text-white text-xs sm:text-sm font-semibold px-3 py-1 rounded-full shadow-md relative z-10 animate-pulse">
-              <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+            <div className="relative z-10 flex items-center gap-2 rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white shadow-md sm:text-sm animate-pulse">
+              <span className="h-2 w-2 rounded-full bg-green-400" />
               Looking forward to connect!
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
@@ -164,53 +176,60 @@ function Navbar() {
               id="mobile-navigation"
               role="navigation"
               aria-label="Mobile navigation"
-              className="fixed top-0 left-0 w-full h-full z-40"
+              className="fixed top-0 left-0 z-40 h-full w-full"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "tween", duration: 0.3 }}>
-              <div className="flex flex-col min-h-[65vh] max-h-[calc(100dvh-2rem)] overflow-y-auto backdrop-blur-xl bg-white/80 border border-white/80 shadow-lg rounded-2xl m-4 p-4">
-                <div className="flex justify-between items-center w-full">
+              <div className="m-4 flex min-h-[65vh] max-h-[calc(100dvh-2rem)] flex-col overflow-y-auto rounded-2xl border border-white/80 bg-white/80 p-4 shadow-lg backdrop-blur-xl">
+                <div className="flex w-full items-center justify-between">
                   <Brand />
+
                   <button
+                    type="button"
                     onClick={closeMenu}
-                    className="w-8 h-8 flex items-center justify-center relative focus:outline-none"
+                    className="relative flex h-8 w-8 items-center justify-center focus:outline-none"
                     aria-label="Close menu">
                     <span
-                      className={`absolute block w-6 h-0.5 bg-black transition-all duration-300 ${
+                      className={`absolute block h-0.5 w-6 bg-black transition-all duration-300 ${
                         isMenuOpen ? "rotate-45" : ""
-                      }`}></span>
+                      }`}
+                    />
                     <span
-                      className={`absolute block w-6 h-0.5 bg-black transition-all duration-300 ${
+                      className={`absolute block h-0.5 w-6 bg-black transition-all duration-300 ${
                         isMenuOpen ? "-rotate-45" : ""
-                      }`}></span>
+                      }`}
+                    />
                   </button>
                 </div>
-                <div className="flex-1 flex flex-col justify-center items-center w-full mt-6">
-                  <ul className="flex flex-col space-y-6 sm:space-y-8 text-center w-full">
-                    {navLinks.map((link, i) => (
+
+                <div className="mt-6 flex w-full flex-1 flex-col items-center justify-center">
+                  <ul className="flex w-full flex-col space-y-6 text-center sm:space-y-8">
+                    {navLinks.map((link, index) => (
                       <motion.li
                         key={link.name}
-                        custom={i}
+                        custom={index}
                         initial="hidden"
                         animate="visible"
                         variants={linkVariants}
                         onClick={closeMenu}
-                        className="w-full flex justify-center">
+                        className="flex w-full justify-center">
                         <a
                           href={link.href}
-                          className="text-lg sm:text-2xl font-medium hover:text-indigo-600 transition-colors">
+                          className="text-lg font-medium transition-colors hover:text-indigo-600 sm:text-2xl">
                           {link.name}
                         </a>
                       </motion.li>
                     ))}
-                    <li className="pt-4 w-full flex justify-center">
-                    <a
-                      href="#contact"
-                      className="relative rounded-3xl text-indigo-800 px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg font-medium flex items-center justify-center overflow-hidden border border-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white"
-                      onClick={closeMenu}>
-                      <span className="relative z-10">Let's talk</span>
-                    </a>
+
+                    {/* CTA remains in the mobile menu */}
+                    <li className="flex w-full justify-center pt-4">
+                      <a
+                        href="#contact"
+                        className="relative flex items-center justify-center overflow-hidden rounded-3xl border border-indigo-800 px-6 py-2 text-base font-medium text-indigo-800 transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-indigo-700 before:duration-500 before:ease-out hover:shadow-xl hover:shadow-indigo-800/40 hover:before:h-56 hover:before:w-56 hover:text-white sm:px-8 sm:py-3 sm:text-lg"
+                        onClick={closeMenu}>
+                        <span className="relative z-10">Let&apos;s talk</span>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -218,7 +237,7 @@ function Navbar() {
             </motion.div>
 
             <motion.div
-              className="fixed top-[-20px] h-[100vh] inset-0 bg-black bg-opacity-10 backdrop-blur-sm z-30 lg:hidden"
+              className="fixed top-[-20px] inset-0 z-30 h-[100vh] bg-black bg-opacity-10 backdrop-blur-sm lg:hidden"
               onClick={closeMenu}
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.3 }}
