@@ -75,9 +75,8 @@ function ContactUs() {
           interest: selectedChips.join(", "),
           message: `${customerName} from ${companyName} is interested in ${selectedChips.join(
             ", "
-          )}. ${
-            otherMessage ? `\n User's note: "${otherMessage}"` : ""
-          } \n Please connect with the client on ${customerEmail}`,
+          )}. ${otherMessage ? `\n User's note: "${otherMessage}"` : ""
+            } \n Please connect with the client on ${customerEmail}`,
           reply_to: "contact@devfarmer.xyz",
         },
         emailJsConfig.publicKey
@@ -136,8 +135,9 @@ function ContactUs() {
 
             <div className="mt-10 space-y-6">
               <a
-                href="mailto:hello@devfarmer.in"
-                className="group flex items-start gap-4 text-slate-700">
+                href="mailto:Devfarmer1@gmail.com"
+                className="group flex items-start gap-4 text-slate-700"
+              >
                 <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-violet-50 text-purple-700 transition group-hover:bg-purple-700 group-hover:text-white">
                   <Mail size={20} aria-hidden="true" />
                 </span>
@@ -147,13 +147,13 @@ function ContactUs() {
                     Email Us
                   </span>
                   <span className="mt-1 block text-sm text-slate-600 group-hover:text-purple-700">
-                    hello@devfarmer.in
+                    Devfarmer1@gmail.com
                   </span>
                 </span>
               </a>
 
               <a
-                href="tel:+918925857757"
+                href="tel:+919008899542"
                 className="group flex items-start gap-4 text-slate-700">
                 <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-violet-50 text-purple-700 transition group-hover:bg-purple-700 group-hover:text-white">
                   <Phone size={20} aria-hidden="true" />
@@ -164,7 +164,7 @@ function ContactUs() {
                     Call Us
                   </span>
                   <span className="mt-1 block text-sm text-slate-600 group-hover:text-purple-700">
-                    +91 89258 57757
+                    +91 9008899542
                   </span>
                 </span>
               </a>
@@ -192,11 +192,10 @@ function ContactUs() {
                       type="button"
                       aria-pressed={isSelected}
                       onClick={() => toggleChip(label)}
-                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-lg border px-2 py-2 text-center text-xs font-medium transition ${
-                        isSelected
+                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-lg border px-2 py-2 text-center text-xs font-medium transition ${isSelected
                           ? "border-purple-700 bg-purple-700 text-white shadow-sm"
                           : "border-slate-200 bg-white text-slate-700 hover:border-purple-300 hover:bg-violet-50 hover:text-purple-800"
-                      }`}>
+                        }`}>
                       <ServiceIcon
                         size={15}
                         aria-hidden="true"

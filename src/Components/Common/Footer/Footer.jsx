@@ -40,20 +40,20 @@ function Footer() {
             <div className="mt-3 flex flex-col items-start gap-3">
               <a
                 className="inline-flex items-start gap-2 text-sm text-purple-700 hover:text-purple-900"
-                href="mailto:hello@devfarmer.in">
+                href="mailto:Devfarmer1@gmail.com">
                 <Mail size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
                 <span>
                   <span className="block text-xs font-semibold text-slate-500">Email</span>
-                  <span className="underline underline-offset-4">hello@devfarmer.in</span>
+                  <span className="underline underline-offset-4">Devfarmer1@gmail.com</span>
                 </span>
               </a>
               <a
                 className="inline-flex items-start gap-2 text-sm text-purple-700 hover:text-purple-900"
-                href="tel:+918925857757">
+                href="tel:+919008899542">
                 <Phone size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
                 <span>
                   <span className="block text-xs font-semibold text-slate-500">Phone</span>
-                  <span className="underline underline-offset-4">+91 89258 57757</span>
+                  <span className="underline underline-offset-4">+91 90088 99542</span>
                 </span>
               </a>
             </div>

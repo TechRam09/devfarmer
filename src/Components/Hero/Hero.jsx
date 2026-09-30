@@ -4,7 +4,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="scroll-mt-24 bg-[#f7f9fc] pb-16 pt-28 lg:min-h-[90dvh] lg:py-24">
+      className="scroll-mt-24 bg-[#f7f9fc] pb-16 pt-32 lg:min-h-screen lg:pb-24 ">
       <div className="site-container grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase text-[#7161ef]">
